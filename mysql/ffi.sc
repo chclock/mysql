@@ -1,9 +1,34 @@
-(define lib-name
-    (case (machine-type)
-      ((i3nt ti3nt a6nt ta6nt) "C:\\Program Files\\MySQL\\MySQL Connector C 6.1\\lib")
-      ((a6osx i3osx ta6osx ti3osx)  "libmysqlclient.dylib")
-      ((a6le i3le ta6le ti3le) "libmysqlclient.so")
-      (else "libmysqlclient.so")))
+(library (mysql ffi)
+  (export
+    mysql-lib-load
+    mysql-init
+    mysql-real-connect
+    mysql-query
+    mysql-store-result
+    mysql-use-result
+    mysql-fetch-field
+    mysql-field-seek
+    mysql-fetch-row
+    mysql-free-result
+    mysql-num-rows
+    mysql-num-fields
+    mysql-errno
+    mysql-error
+    mysql-get-client-info
+    mysql-close
+    )
+  (import 
+    (scheme)
+    (mysql const)
+    (mysql ftype)
+    )
+      
+  (define lib-name
+      (case (machine-type)
+        ((i3nt ti3nt a6nt ta6nt) "C:\\Program Files\\MySQL\\MySQL Connector C 6.1\\lib\\libmysql.dll")
+        ((a6osx i3osx ta6osx ti3osx)  "libmysqlclient.dylib")
+        ((a6le i3le ta6le ti3le) "libmysqlclient.so")
+        (else "libmysqlclient.so")))
 
   (define mysql-lib-load
     (lambda (path)
@@ -25,15 +50,14 @@
 
   (define-procedure mysql-query "mysql_query" ((* mysql) string) int)
 
-
   (define-procedure mysql-store-result "mysql_store_result" ((* mysql)) (* mysql-res))
   
   (define-procedure mysql-use-result "mysql_use_result" ((* mysql)) (* mysql-res))
 
-
   (define-procedure mysql-fetch-field "mysql_fetch_field" ((* mysql-res)) (* mysql-field))
 
-  
+  (define-procedure mysql-field-seek "mysql_field_seek" ((* mysql-res) unsigned-int) unsigned-int)
+
   (define-procedure mysql-fetch-row "mysql_fetch_row" ((* mysql-res)) (* mysql-row))
 
   (define-procedure mysql-free-result "mysql_free_result" ((* mysql-res)) void)
@@ -49,4 +73,4 @@
   (define-procedure mysql-get-client-info "mysql_get_client_info" () string)
 
   (define-procedure mysql-close "mysql_close" ((* mysql)) void)
-  
+)
