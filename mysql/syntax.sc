@@ -30,7 +30,10 @@
             conn)))))
 
   (define mysql:query
-    (lambda (conn query)
+    (case-lambda
+      ((conn query)
+        (mysql:query conn query 'list))
+      ((conn query format)
       (if (zero? (mysql-query conn query))
         (let ([result (mysql-store-result conn)])
           (if (not (ftype-pointer-null? result))
@@ -38,9 +41,12 @@
                    [fields (parser-fields result num-fields)]
                    [rows (parser-rows result fields '())])
               (mysql-free-result result)
-              rows)))
+              (case format
+                ('list rows)
+                ('json (mysql-list->json rows fields))
+                (else rows)))))
         (mysql:error conn "query")
-      )))
+      ))))
 
   (define parser-fields
     (lambda (result num-fields)
@@ -181,6 +187,28 @@
               (minute (part 14 16))
               (second (part 17 19)))
           (make-date 0 second minute hour day month year 0)))))
+
+  (define mysql-list->json
+    (lambda (rows fields)
+      (let* ([len (length rows)]
+             [vec (make-vector len)]
+             [field-len (vector-length fields)])
+        (let loop1 ([idx1 0])
+          (if (< idx1 len)
+            (let loop2 ([idx2 0]
+                        [lst '()])
+              (if (< idx2 field-len)
+                (loop2 (+ 1 idx2)
+                      (cons 
+                        (cons
+                          (car (vector-ref fields idx2))
+                          (vector-ref (list-ref rows idx1) idx2))
+                        lst))
+                (begin
+                  (vector-set! vec idx1 (reverse lst))
+                  (loop1 (+ 1 idx1)))))
+            vec
+          )))))
 
   (define mysql:error
     (lambda (conn name)

@@ -1,5 +1,5 @@
 (("name" . "mysql")
-("version" . "0.1.0")
+("version" . "0.1.1")
 ("description" . "")
 ("keywords")
 ("author" 
@@ -7,6 +7,7 @@
 ("private" . #f)
 ("scripts" 
     ("run" . "scheme --script")
-    ("repl" . "scheme"))
+    ("repl" . "scheme")
+    ("test" . "raven run mysql/examples/test.ss"))
 ("dependencies")
 ("devDependencies"))
