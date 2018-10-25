@@ -2,32 +2,13 @@
 
 mySQL binding for Chez Scheme
 
-1. define mysql connection
+1. define mysql database set
 
-> (define conn (mysql:connect "localhost" "root" "123456" "sys"))
+`(define db (mysql:connect "IP" "Count" "Password" "DatabaseName"))`
 
-2. execute sql
+2. execute query
 
-> (mysql:query conn "SELECT * FROM sys.sys_config")  
-> or  
-> (mysql:query conn "SELECT * FROM sys.sys_config" 'list)
-
-=>
-
-```
-(
-    #(diagnostics.allow_i_s_tables OFF #<date Sat Mar  3 00:33:37 2018> null) 
-    #(diagnostics.include_raw OFF #<date Sat Mar  3 00:33:37 2018> null) 
-    #(ps_thread_trx_info.max_length 65535 #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_performance_analyzer.limit 100 #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_performance_analyzer.view null #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_truncate_len 64 #<date Sat Mar  3 00:33:37 2018> null)
-)
-```
-
-or 
-
-> (mysql:query conn "SELECT * FROM sys.sys_config" 'json)
+`(mysql:query conn "SELECT * FROM TableName")`
 
 =>
 
