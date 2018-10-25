@@ -4,11 +4,11 @@ mySQL binding for Chez Scheme
 
 1. define mysql database set
 
-`(define db (mysql:connect "IP" "Count" "Password" "DatabaseName"))`
+`(define db (connect "IP" "Count" "Password" "DatabaseName"))`
 
 2. execute query
 
-`(mysql:query conn "SELECT * FROM TableName")`
+`(query conn "SELECT * FROM TableName")`
 
 =>
 
