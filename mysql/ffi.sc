@@ -24,11 +24,11 @@
         )
             
     (define lib-name
-            (case (machine-type)
-                ((i3nt ti3nt a6nt ta6nt) "C:\\Program Files\\MySQL\\MySQL Connector C 6.1\\lib\\libmysql.dll")
-                ((a6osx i3osx ta6osx ti3osx)                                                "/usr/local/opt/mysql-client/lib/libmysqlclient.dylib")
-                ((a6le i3le ta6le ti3le) "libmysqlclient.so")
-                (else "libmysqlclient.so")))
+        (case (machine-type)
+            ((i3nt ti3nt a6nt ta6nt) "C:\\Program Files\\MySQL\\MySQL Connector C 6.1\\lib\\libmysql.dll")
+            ((a6osx i3osx ta6osx ti3osx) "libmysqlclient.dylib")
+            ((a6le i3le ta6le ti3le) "libmysqlclient.so")
+            (else "libmysqlclient.so")))
 
     (define mysql-lib-load
         (lambda (path)
