@@ -17,17 +17,19 @@
                 (make-ftype-pointer type #x00000000))))
 
     (define connect
-        (case-lambda
-            ((host user passwd db) 
-                (connect host user passwd db 3306))
-            ((host user passwd db port)
-                (connect host user passwd db 3306 #f 0))
-            ((host user passwd db port unix_socket clientflag)
-                (let* ((conn (mysql-init (make-ftype-null mysql)))
-                            (rst (mysql-real-connect conn host user passwd db port unix_socket clientflag)))
-                    (if (ftype-pointer-null? rst)
-                        (err conn "connect")
-                        conn)))))
+        (lambda (lst)
+            (define host (or (ref lst 'hostname) '()))
+            (define port (or (ref lst 'port) 3306))
+            (define user (or (ref lst 'user) '()))
+            (define password (or (ref lst 'password) '()))
+            (define database (or (ref lst 'database) '()))
+            (define unix_socket (or (ref lst 'socket) #f))
+            (define clientflag (or (ref lst 'clientflag) 0))
+            (let* ((conn (mysql-init (make-ftype-null mysql)))
+                    (rst (mysql-real-connect conn host user password database port unix_socket clientflag)))
+                (if (ftype-pointer-null? rst)
+                    (err conn "connect")
+                    conn))))
 
     (define query
         (lambda (conn query)
