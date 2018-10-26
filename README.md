@@ -4,7 +4,11 @@ mySQL binding for Chez Scheme
 
 1. define mysql database set
 
-`(define conn (connect "IP" "Count" "Password" "DatabaseName"))`
+`(define conn (connect 
+                ``((hostname . "IP")
+                  (user . "root")
+                  (password . "Password")
+                  (database . "DatabaseName"))))`
 
 2. execute query
 
