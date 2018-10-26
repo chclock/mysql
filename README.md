@@ -6,7 +6,7 @@ mySQL binding for Chez Scheme
 
 ```
 (define conn (connect 
-                ``((hostname . "IP")
+                `((hostname . "IP")
                   (user . "root")
                   (password . "Password")
                   (database . "DatabaseName"))))
