@@ -2,6 +2,14 @@
 
 mySQL binding for Chez Scheme
 
+
+OSX:
+```
+$ brew install mysql-client
+$ sudo ln -s /usr/local/opt/mysql-client/lib/libmysqlclient.dylib /usr/local/lib/libmysqlclient.dylib
+```
+
+
 1. define mysql database set
 
 ```
@@ -36,3 +44,5 @@ mySQL binding for Chez Scheme
 ```
 
 you can use json library to convert this vector to json string
+
+
