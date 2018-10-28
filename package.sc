@@ -8,6 +8,7 @@
 ("scripts" 
     ("run" . "scheme --script")
     ("repl" . "scheme")
-    ("test" . "raven run mysql/examples/test.ss"))
-("dependencies")
+    ("test" . "raven run mysql/test/test.ss"))
+    ("dependencies"
+        ("core" . "1.3.1"))
 ("devDependencies"))

@@ -9,6 +9,7 @@
         (mysql const)
         (mysql ftype)
         (mysql ffi)
+        (only (core alist) ref)
         )
             
     (define-syntax make-ftype-null
