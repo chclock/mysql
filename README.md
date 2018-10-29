@@ -2,32 +2,27 @@
 
 mySQL binding for Chez Scheme
 
-1. define mysql connection
 
-> (define conn (mysql:connect "localhost" "root" "123456" "sys"))
-
-2. execute sql
-
-> (mysql:query conn "SELECT * FROM sys.sys_config")  
-> or  
-> (mysql:query conn "SELECT * FROM sys.sys_config" 'list)
-
-=>
-
+OSX:
 ```
-(
-    #(diagnostics.allow_i_s_tables OFF #<date Sat Mar  3 00:33:37 2018> null) 
-    #(diagnostics.include_raw OFF #<date Sat Mar  3 00:33:37 2018> null) 
-    #(ps_thread_trx_info.max_length 65535 #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_performance_analyzer.limit 100 #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_performance_analyzer.view null #<date Sat Mar  3 00:33:37 2018> null) 
-    #(statement_truncate_len 64 #<date Sat Mar  3 00:33:37 2018> null)
-)
+$ brew install mysql-client
+$ sudo ln -s /usr/local/opt/mysql-client/lib/libmysqlclient.dylib /usr/local/lib/libmysqlclient.dylib
 ```
 
-or 
 
-> (mysql:query conn "SELECT * FROM sys.sys_config" 'json)
+1. define mysql database set
+
+```
+(define conn (connect 
+                `((hostname . "IP")
+                  (user . "root")
+                  (password . "Password")
+                  (database . "DatabaseName"))))
+``` 
+
+2. execute query
+
+`(query conn "SELECT * FROM TableName")`
 
 =>
 
@@ -49,3 +44,5 @@ or
 ```
 
 you can use json library to convert this vector to json string
+
+

@@ -1,3 +1,4 @@
 *.sc~
 *.sc#*
 .#*.sc
+.DS_Store
